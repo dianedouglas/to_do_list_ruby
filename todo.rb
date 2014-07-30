@@ -1,7 +1,7 @@
 require './lib/task'
 require './lib/list'
 
-@list = []
+@list_of_tasks = []
 @lists = []
 @done_list = []
 @current_task = 1
@@ -37,7 +37,7 @@ def create_new_task
   puts "Please enter a description of your task."
   user_description = gets.chomp
   new_task = Task.new(user_description, @current_task)
-  @list.push(new_task)
+  @list_of_tasks << new_task
   @current_task += 1
 end
 
@@ -52,7 +52,7 @@ end
 
 def list_tasks
   puts "Here are your tasks:"
-  @list.each do |task|
+  @list_of_tasks.each do |task|
     puts "#{task.id}. #{task.description}"
   end
   puts "\n\n"
@@ -61,22 +61,51 @@ end
 def select_task
   list_tasks
   puts "Please enter a number to select your task. Enter '1' to pick your first task."
-  task_number = gets.chomp.to_i
-  @current_task = task_number
-  puts @list[task_number-1].id.to_s + ".  "+ @list[task_number-1].description
-  puts "Enter 'd' to mark it as done. Enter any other key to return to main menu."
-  choose_d_or_not = gets.chomp
-  if(choose_d_or_not == 'd')
+  puts "If there are no tasks, press 'x' to return to the main menu."
+  task_number = gets.chomp
+  if task_number == 'x'
+    main_menu
+  elsif !task_number.to_i.between?(1,@list_of_tasks.length)
+    puts "That task doesn't exist. Please try again."
+    select_task
+  end
+  @current_task = task_number.to_i
+  puts @list_of_tasks[@current_task-1].id.to_s + ".  "+ @list_of_tasks[@current_task-1].description
+  puts "Enter 'd' to mark it as done, 'a' to add it to a list, or enter any other key to return to main menu."
+  user_option = gets.chomp
+  if(user_option == 'd')
     task_done
+  elsif user_option == 'a'
+    add_to_list
   else
     main_menu
   end
 end
 
 def task_done
-  @done_list << @list[@current_task-1]
-  @list.delete_at(@current_task-1)
+  @done_list << @list_of_tasks[@current_task-1]
+  @list_of_tasks.delete_at(@current_task-1)
   puts "Task done."
+end
+
+def add_to_list
+  @lists.each do |list|
+    puts list.id.to_s + ". " + list.name
+  end
+  puts "Enter a number to select a list, or press 'x' to return to the main menu."
+  list_choice = gets.chomp
+  if list_choice == 'x'
+    main_menu
+  elsif list_choice.to_i.between?(1,@lists.length)
+    @current_list = list_choice.to_i
+    @lists[@current_list-1].tasks << @list_of_tasks[@current_task-1]
+    puts @lists[@current_list-1].tasks[@lists[@current_list-1].tasks.length-1].description + " has been added to the list."
+
+  else
+    puts "Does not compute!"
+    add_to_list
+  end
+
 end
 
 def completed_list
