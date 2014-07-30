@@ -51,4 +51,13 @@ describe(List) do
     test_list = List.new('Chicken Stuff', 1)
     expect(test_list.id).to eq 1
   end
+
+  it 'sorts all tasks in the list according to its duedate' do
+    test_list = List.new('Chicken Stuff', 1)
+    test_task = Task.new("Learn Ruby", 1, 'high', '20010203')
+    test_task2 = Task.new("Learn Rails", 2, 'high', '20040203')
+    test_list.add_task(test_task)
+    test_list.add_task(test_task2)
+    expect(test_list.date_sort).to eq [test_task, test_task2]
+  end
 end
