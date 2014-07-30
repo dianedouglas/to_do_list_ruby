@@ -1,7 +1,8 @@
 class List
-  def initialize(name)
+  def initialize(name, id)
     @name = name
     @tasks = []
+    @id = id
   end
 
   def name
@@ -10,6 +11,10 @@ class List
 
   def tasks
     @tasks
+  end
+
+  def id
+    @id
   end
 
   def add_task(task)

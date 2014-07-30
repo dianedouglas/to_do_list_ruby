@@ -21,19 +21,24 @@ end
 
 describe(List) do
   it("starts out with an empty list of tasks") do
-    test_list = List.new("School stuff")
+    test_list = List.new("School stuff", 1)
     test_list.tasks.should eq []
   end
 
   it("can add tasks") do
-    test_list = List.new("School stuff")
+    test_list = List.new("School stuff", 1)
     test_task = Task.new("Learn Ruby", 1)
     test_list.add_task(test_task)
     test_list.tasks.should eq [test_task]
   end
 
   it("returns the list's name") do
-    test_list = List.new("School stuff")
-    expect(test_list.name).to eq ("School stuff")
+    test_list = List.new("School stuff", 1)
+    expect(test_list.name).to eq("School stuff")
+  end
+
+  it 'provides an id number for each list' do
+    test_list = List.new('Chicken Stuff', 1)
+    expect(test_list.id).to eq 1
   end
 end

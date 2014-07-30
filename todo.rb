@@ -5,6 +5,7 @@ require './lib/list'
 @lists = []
 @done_list = []
 @current_task = 1
+@current_list = 1
 
 def main_menu
   loop do
@@ -43,9 +44,10 @@ end
 def create_new_list
   puts "What would you like your list to be named?"
   user_list_name = gets.chomp
-  new_list = List.new(user_list_name)
+  new_list = List.new(user_list_name, @current_list)
   @lists << new_list
-  puts new_list.name
+  @current_list += 1
+  puts new_list.id
 end
 
 def list_tasks
