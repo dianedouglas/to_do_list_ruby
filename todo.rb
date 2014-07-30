@@ -1,18 +1,22 @@
 require './lib/task'
+require './lib/list'
 
 @list = []
+@lists = []
 @done_list = []
 @current_task = 1
 
 def main_menu
   loop do
     puts "Welcome to the main menu. Please select from the following"
-    puts "'a' to add a task. 'l' to list all tasks. 's' to select and edit a task."
+    puts "'a' to add a task. 'n' to create a new list. 'l' to list all tasks. 's' to select and edit a task."
     puts "'c' to list completed tasks. 'x' to exit."
 
     main_choice = gets.chomp
     if main_choice == 'a'
      create_new_task
+    elsif main_choice == 'n'
+     create_new_list
     elsif main_choice == 'l'
      list_tasks
     elsif main_choice == 's'
@@ -34,6 +38,14 @@ def create_new_task
   new_task = Task.new(user_description, @current_task)
   @list.push(new_task)
   @current_task += 1
+end
+
+def create_new_list
+  puts "What would you like your list to be named?"
+  user_list_name = gets.chomp
+  new_list = List.new(user_list_name)
+  @lists << new_list
+  puts new_list.name
 end
 
 def list_tasks

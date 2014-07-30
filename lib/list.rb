@@ -4,6 +4,10 @@ class List
     @tasks = []
   end
 
+  def name
+    @name
+  end
+
   def tasks
     @tasks
   end

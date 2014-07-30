@@ -31,4 +31,9 @@ describe(List) do
     test_list.add_task(test_task)
     test_list.tasks.should eq [test_task]
   end
+
+  it("returns the list's name") do
+    test_list = List.new("School stuff")
+    expect(test_list.name).to eq ("School stuff")
+  end
 end
