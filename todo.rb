@@ -17,6 +17,8 @@ def main_menu
      list_tasks
     elsif main_choice == 's'
       select_task
+    elsif main_choice == 'c'
+      completed_list
     elsif main_choice == 'x'
      puts "Good-bye..."
      exit
@@ -61,5 +63,12 @@ def task_done
   @done_list << @list[@current_task-1]
   @list.delete_at(@current_task-1)
   puts "Task done."
+end
+
+def completed_list
+  puts "Here are all of the tasks you've done! wOOt!"
+  @done_list.each do |done|
+    puts done.description
+  end
 end
 main_menu
