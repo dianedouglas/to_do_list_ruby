@@ -10,8 +10,8 @@ require './lib/list'
 def main_menu
   loop do
     puts "Welcome to the main menu. Please select from the following"
-    puts "'a' to add a task. 'n' to create a new list. 'l' to list all tasks. 's' to select and edit a task."
-    puts "'c' to list completed tasks. 'x' to exit."
+    puts "'a' to add a task. 'n' to create a new list. 'l' to select a list and show all its tasks."
+    puts "'t' to select and edit a task.'c' to list completed tasks. 'x' to exit."
 
     main_choice = gets.chomp
     if main_choice == 'a'
@@ -20,7 +20,7 @@ def main_menu
      create_new_list
     elsif main_choice == 'l'
      list_tasks
-    elsif main_choice == 's'
+    elsif main_choice == 't'
       select_task
     elsif main_choice == 'c'
       completed_list
@@ -51,15 +51,30 @@ def create_new_list
 end
 
 def list_tasks
-  puts "Here are your tasks:"
-  @list_of_tasks.each do |task|
-    puts "#{task.id}. #{task.description}"
+  puts "Here are your lists!"
+  @lists.each do |list|
+    puts "#{list.id}. #{list.name}"
+  end
+  puts "Please enter a number to select your list. Enter '1' to pick your first list."
+  puts "If there are no lists, press 'x' to return to the main menu."
+  list_choice = gets.chomp
+  if list_choice == 'x'
+    main_menu
+  elsif list_choice.to_i.between?(1,@lists.length)
+    @current_list = list_choice.to_i
+    puts "Here are your tasks:"
+    puts @lists[@current_list-1].name
+    @lists[@current_list-1].tasks.each do |task|
+      puts "#{task.id}. #{task.description}"
+    end
   end
   puts "\n\n"
 end
 
 def select_task
-  list_tasks
+  @list_of_tasks.each do |task|
+    puts "#{task.id}. #{task.description}"
+  end
   puts "Please enter a number to select your task. Enter '1' to pick your first task."
   puts "If there are no tasks, press 'x' to return to the main menu."
   task_number = gets.chomp
