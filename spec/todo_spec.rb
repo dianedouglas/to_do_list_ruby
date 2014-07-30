@@ -25,10 +25,10 @@ describe(List) do
     test_list.tasks.should eq []
   end
 
-  # it("can add tasks") do
-  #   test_list = List.new("School stuff")
-  #   test_task = Task.new("Learn Ruby")
-  #   test_list.add_task(test_task)
-  #   test_list.tasks.should eq [test_task]
-  # end
+  it("can add tasks") do
+    test_list = List.new("School stuff")
+    test_task = Task.new("Learn Ruby", 1)
+    test_list.add_task(test_task)
+    test_list.tasks.should eq [test_task]
+  end
 end

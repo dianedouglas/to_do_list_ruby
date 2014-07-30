@@ -7,4 +7,8 @@ class List
   def tasks
     @tasks
   end
+
+  def add_task(task)
+    @tasks.push(task)
+  end
 end
