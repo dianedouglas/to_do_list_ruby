@@ -1,6 +1,7 @@
 require './lib/task'
 
 @list = []
+@current_task = 1
 
 def main_menu
   loop do
@@ -13,16 +14,7 @@ def main_menu
     elsif main_choice == 'l'
      list_tasks
     elsif main_choice == 's'
-      puts "Please enter a number to select your task. Enter '1' to pick your first task."
-      task_number = gets.chomp.to_i
-      puts @list[task_number-1].description
-      puts "Enter 'd' to mark it as done. Enter any other key to return to main menu."
-      choose_d_or_not = gets.chomp
-      if(choose_d_or_not == 'd')
-        task_done
-      else
-        main_menu
-      end
+      select_task
     elsif main_choice == 'x'
      puts "Good-bye..."
      exit
@@ -35,14 +27,28 @@ end
 def create_new_task
   puts "Please enter a description of your task."
   user_description = gets.chomp
-  new_task = Task.new(user_description)
+  new_task = Task.new(user_description, @current_task)
   @list.push(new_task)
+  @current_task += 1
 end
 
 def list_tasks
   puts "Here are your tasks:"
   @list.each do |task|
-    puts task.description
+    puts "#{task.id}. #{task.description}"
+  end
+end
+
+def select_task
+  puts "Please enter a number to select your task. Enter '1' to pick your first task."
+  task_number = gets.chomp.to_i
+  puts @list[task_number-1].id.to_s + ". "+ @list[task_number-1].description
+  puts "Enter 'd' to mark it as done. Enter any other key to return to main menu."
+  choose_d_or_not = gets.chomp
+  if(choose_d_or_not == 'd')
+    task_done
+  else
+    main_menu
   end
 end
 
