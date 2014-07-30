@@ -5,13 +5,24 @@ require './lib/task'
 def main_menu
   loop do
     puts "Welcome to the main menu. Please select from the following"
-    puts "'a' to add a task. 'l' to list all tasks. 'x' to exit."
+    puts "'a' to add a task. 'l' to list all tasks. Enter 's' to select and edit a task. 'x' to exit."
 
     main_choice = gets.chomp
     if main_choice == 'a'
      create_new_task
     elsif main_choice == 'l'
      list_tasks
+    elsif main_choice == 's'
+      puts "Please enter a number to select your task. Enter '1' to pick your first task."
+      task_number = gets.chomp.to_i
+      puts @list[task_number-1].description
+      puts "Enter 'd' to mark it as done. Enter any other key to return to main menu."
+      choose_d_or_not = gets.chomp
+      if(choose_d_or_not == 'd')
+        task_done
+      else
+        main_menu
+      end
     elsif main_choice == 'x'
      puts "Good-bye..."
      exit
@@ -35,4 +46,7 @@ def list_tasks
   end
 end
 
+def task_done
+  puts "Task done."
+end
 main_menu
