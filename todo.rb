@@ -36,9 +36,16 @@ end
 def create_new_task
   puts "Please enter a description of your task."
   user_description = gets.chomp
-  new_task = Task.new(user_description, @current_task)
+  puts "Please enter a priority level of 'high', 'med' or 'low'"
+  user_priority = gets.chomp
+  if !(user_priority == 'high' || user_priority == 'med' || user_priority == 'low')
+    puts "Does not compute. Please use either 'high', 'med' or 'low'."
+    create_new_task
+  end
+  new_task = Task.new(user_description, @current_task, user_priority)
   @list_of_tasks << new_task
   @current_task += 1
+  puts new_task.priority
 end
 
 def create_new_list
