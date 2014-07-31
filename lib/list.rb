@@ -28,7 +28,6 @@ class List
     @tasks.each do |task|
       tasks_with_dates[task.duedate] = task
     end
-    # binding.pry
     sorted_tasks = Hash[tasks_with_dates.sort]
     output_ordered_tasks = []
     sorted_tasks.each_value do |value|

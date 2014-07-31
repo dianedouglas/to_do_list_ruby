@@ -1,5 +1,6 @@
 require './lib/task'
 require './lib/list'
+require 'date'
 
 @list_of_tasks = []
 @lists = []
@@ -10,7 +11,7 @@ require './lib/list'
 def main_menu
   loop do
     puts "Welcome to the main menu. Please select from the following"
-    puts "'a' to add a task. 'n' to create a new list. 'l' to select a list and show all its tasks."
+    puts "'a' to add a task. 'n' to create a new list. 'l' to select a list."
     puts "'t' to select and edit a task.'c' to list completed tasks. 'x' to exit."
 
     main_choice = gets.chomp
@@ -42,7 +43,18 @@ def create_new_task
     puts "Does not compute. Please use either 'high', 'med' or 'low'."
     create_new_task
   end
-  new_task = Task.new(user_description, @current_task, user_priority)
+  puts "Please enter a due date."
+  puts "First enter the year."
+  year = gets.chomp
+  puts "Now enter the month."
+  month = gets.chomp
+  puts "Now enter the date."
+  date = gets.chomp
+
+  duedate = year+month+date
+  puts duedate
+
+  new_task = Task.new(user_description, @current_task, user_priority, duedate)
   @list_of_tasks << new_task
   @current_task += 1
   puts new_task.priority
@@ -76,6 +88,20 @@ def list_tasks
     end
   end
   puts "\n\n"
+  puts "Would you like to see your tasks sorted according to due date?"
+  puts "Please press 'y' for 'yes', or 'n' for 'no way, dude...'"
+  user_yes_or_no = gets.chomp
+  if user_yes_or_no == 'y'
+    @lists[@current_list-1].date_sort.each do |task|
+      puts "#{task.duedate} - #{task.description}"
+    end
+  elsif user_yes_or_no == 'n'
+    puts "No worries. Returning to main menu."
+    main_menu
+  else
+    puts "Does not compute. Returning to main menu..."
+    main_menu
+  end
 end
 
 def select_task
